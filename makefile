@@ -17,11 +17,10 @@ ASM_SOURCES = $(wildcard $(ARCHDIR)/*.s)
 C_OBJ = $(C_SOURCES:.c=.o)
 ASM_OBJ = $(ASM_SOURCES:.s=.o)
 
-#boot.o: boot.s
-#	i686-elf-as $< -o $@
+.PHONY: clean
 
-#kernel.o: kernel.c
-#	i686-elf-gcc -c $< -o $@ $(CFLAGS)
+clean:
+	rm $(C_OBJ) $(ASM_OBJ)
 
 %.o: %.s
 	$(AS) $< -o $@
