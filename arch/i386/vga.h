@@ -24,7 +24,7 @@ enum vga_color {
 
 static uint8_t vga_entry_color(
         enum vga_color foreground, enum vga_color background) {
-    return foreground | (background << 4);
+    return (uint8_t) (foreground | (background << 4));
 }
 
 static uint16_t vga_entry(unsigned char c, uint8_t color) {

@@ -1,9 +1,10 @@
 #include <kernel/terminal.h>
 #include <stdint.h>
 #include <string.h>
+#include "vga.h"
 
-static const int VGA_WIDTH = 80;
-static const int VGA_HEIGHT = 25;
+static const size_t VGA_WIDTH = 80;
+static const size_t VGA_HEIGHT = 25;
 static uint16_t* const VGA_MEMORY = (uint16_t*) 0xb8000;
 
 struct terminal {
@@ -28,7 +29,7 @@ void terminal_initialize(void) {
     }
 }
 
-void terminal_putentryat(unsigned char c, uint8_t color, size_t row,
+static void terminal_putentryat(unsigned char c, uint8_t color, size_t row,
         size_t column) {
     terminal.buffer[row * VGA_WIDTH + column] = vga_entry(c, color);
 }

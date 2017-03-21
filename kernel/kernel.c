@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
-#include <terminal.h>
+#include <kernel/terminal.h>
 
 #if defined(__linux__)
 #error "You are not using a cross-compiler"

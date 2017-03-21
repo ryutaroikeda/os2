@@ -1,5 +1,6 @@
 *.o
-isodir
 *.bin
 *.iso
-
+*.swp
+tags
+isodir
