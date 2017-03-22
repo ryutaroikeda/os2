@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <kernel/terminal.h>
 
 int putchar(int c) {
-    // to do
+    terminal_putchar((char) c);
     return c;
 }
 
