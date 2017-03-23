@@ -35,11 +35,16 @@ static void terminal_putentryat(unsigned char c, uint8_t color, size_t row,
 }
 
 void terminal_putchar(char c) {
+    if ('\n' == c) {
+        terminal.column = 0;
+        terminal.row++;
+        return;
+    }
     terminal_putentryat((unsigned char)c, terminal.color, terminal.row,
             terminal.column);
-    if (++terminal.column == VGA_WIDTH) {
+    if (++terminal.column >= VGA_WIDTH) {
         terminal.column = 0;
-        if (++terminal.row == VGA_HEIGHT) {
+        if (++terminal.row >= VGA_HEIGHT) {
             terminal.row = 0;
         }
     }

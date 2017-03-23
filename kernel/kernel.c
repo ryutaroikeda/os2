@@ -14,6 +14,7 @@ void kernel_main(void) {
     //uint8_t* video = (uint8_t*) 0xb8000;
     //video[0] = 'X';
     terminal_initialize();
-    printf("hello world");
+    printf("%s", "hello world\n");
+    printf("%s", "hello world\n");
 }
 

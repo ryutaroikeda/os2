@@ -6,7 +6,9 @@ Based on wiki.osdev.org
 
 Build and install an i686 cross-compiler at `$HOME/opt/cross/bin`.
 
-Run
+`cd os2`
+
+Then run
 
 `source activate.sh`
 
