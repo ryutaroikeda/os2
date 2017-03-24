@@ -14,15 +14,23 @@ Then run
 
 To build the image,
 
-`make os.iso`.
+`make os.kernel`.
 
 This requires `grub-mkrescue` and `xorriso`.
 `grub-mkrescue` fails silently if you don't have `xorriso` installed.
 
 To run with QEMU, do
 
-`qemu-system-i386 -cdrom os.iso`
+`qemu-system-i386 -cdrom os.kernel`
 
 If the boot fails with something like `Could not read from CD-ROM (code 0009)`
 you may need to `apt-get install grub-pc-bin`.
 
+## to do
+
+- abort
+- panic
+- stack smashing protection
+- global constructor
+- userland
+	- libc
