@@ -15,11 +15,17 @@ LIBK_CFLAGS:=$(CFLAGS) -D__is_libk
 ARCH?=i386
 ARCHDIR:=arch/$(ARCH)
 
-C_SOURCES:=$(wildcard kernel/*.c $(ARCHDIR)/*.c)
-LIBK_SOURCES:=$(wildcard libc/stdio/*.c libc/string/*.c)
-ASM_SOURCES:=$(wildcard $(ARCHDIR)/*.s)
-C_OBJ:=$(C_SOURCES:.c=.o)
-ASM_OBJ:=$(ASM_SOURCES:.s=.o)
+#C_SOURCES:=$(wildcard kernel/*.c $(ARCHDIR)/*.c)
+
+KERNEL_C:=$(wildcard kernel/*.c)
+ARCH_C:=$(wildcard $(ARCHDIR/*.c)
+ARCH_S:=$(wildcard $(ARCHDIR/*.s)
+LIBK_SOURCES:=$(wildcard libc/stdio/*.c libc/string/*.c libc/stdlib/*.c)
+#ASM_SOURCES:=$(wildcard $(ARCHDIR)/*.s)
+#C_OBJ:=$(C_SOURCES:.c=.o)
+KERNEL_OBJ:=$(KERNEL_C:.c=.o)
+ARCH_OBJ:=$(ARCH_C:.c=.o) $(ARCH_S:.s=.o)
+#ASM_OBJ:=$(ASM_SOURCES:.s=.o)
 LIBK_OBJS:=$(LIBK_SOURCES:.c=.libk.o)
 
 LIB_BINARIES:=libk.a
@@ -31,6 +37,7 @@ LIBS:=$(LIBS) -nostdlib -lk -lgcc
 .PHONY: install-kernel
 .PHONY: install-lib
 .PHONY: tags
+.PHONY: test
 
 all: install-headers install-lib install-kernel os.iso
 
@@ -62,6 +69,8 @@ clean:
 
 tags:
 	ctags -R --exclude=isodir .
+
+test:
 
 libk.a: $(LIBK_OBJS)
 	$(AR) -rsc $@ $(LIBK_OBJS)
