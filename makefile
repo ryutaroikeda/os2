@@ -15,18 +15,13 @@ LIBK_CFLAGS:=$(CFLAGS) -D__is_libk
 ARCH?=i386
 ARCHDIR:=arch/$(ARCH)
 
-#C_SOURCES:=$(wildcard kernel/*.c $(ARCHDIR)/*.c)
-
 KERNEL_C:=$(wildcard kernel/*.c)
-ARCH_C:=$(wildcard $(ARCHDIR/*.c)
-ARCH_S:=$(wildcard $(ARCHDIR/*.s)
-LIBK_SOURCES:=$(wildcard libc/stdio/*.c libc/string/*.c libc/stdlib/*.c)
-#ASM_SOURCES:=$(wildcard $(ARCHDIR)/*.s)
-#C_OBJ:=$(C_SOURCES:.c=.o)
+ARCH_C:=$(wildcard $(ARCHDIR)/*.c)
+ARCH_S:=$(wildcard $(ARCHDIR)/*.s)
+LIBK_C:=$(wildcard libc/stdio/*.c libc/string/*.c libc/stdlib/*.c)
 KERNEL_OBJ:=$(KERNEL_C:.c=.o)
 ARCH_OBJ:=$(ARCH_C:.c=.o) $(ARCH_S:.s=.o)
-#ASM_OBJ:=$(ASM_SOURCES:.s=.o)
-LIBK_OBJS:=$(LIBK_SOURCES:.c=.libk.o)
+LIBK_OBJ:=$(LIBK_C:.c=.libk.o)
 
 LIB_BINARIES:=libk.a
 LIBS:=$(LIBS) -nostdlib -lk -lgcc
@@ -59,7 +54,7 @@ install-lib: $(LIB_BINARIES)
 	done
 
 clean:
-	-rm $(C_OBJ) $(ASM_OBJ)
+	-rm $(KERNEL_OBJ) $(ARCH_OBJ) $(LIBK_OBJ)
 	-rm os.kernel
 	-rm os.iso
 	-rm libk.a
@@ -72,11 +67,11 @@ tags:
 
 test:
 
-libk.a: $(LIBK_OBJS)
-	$(AR) -rsc $@ $(LIBK_OBJS)
+libk.a: $(LIBK_OBJ)
+	$(AR) -rsc $@ $(LIBK_OBJ)
 
-os.kernel: $(ARCHDIR)/linker.ld $(C_OBJ) $(ASM_OBJ)
-	$(CC) -T $< -o $@ $(CFLAGS) $(LDFLAGS) $(C_OBJ) $(ASM_OBJ) $(LIBS)
+os.kernel: $(ARCHDIR)/linker.ld $(KERNEL_OBJ) $(ARCH_OBJ)
+	$(CC) -T $< -o $@ $(CFLAGS) $(LDFLAGS) $(KERNEL_OBJ) $(ARCH_OBJ) $(LIBS)
 	grub-file --is-x86-multiboot $@
 
 os.iso: grub.cfg os.kernel
