@@ -1,8 +1,9 @@
+*.a
+*.d
 *.o
 *.bin
 *.iso
 *.swp
-*.a
 *.kernel
 tags
 isodir

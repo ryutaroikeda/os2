@@ -15,9 +15,9 @@ void kernel_main(void);
 void kernel_main(void) {
     terminal_initialize();
     char buf[] = "hello world\n";
-    memcpy(buf, "holaa", 5);
-    printf("%s", "hello world\n");
+    char* s = &buf[1];
+    //memcpy(buf, "holaa", 5);
+    memmove(s, buf, 2);
     printf("%s", buf);
-    abort();
 }
 

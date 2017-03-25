@@ -7,7 +7,7 @@ void* memmove(void* to, const void* from, size_t size) {
         }
     } else {
         for (size_t i = size; i > 0; i--) {
-            ((char*) to)[i] = ((const char*) from)[i];
+            ((char*) to)[i - 1] = ((const char*) from)[i - 1];
         }
     }
     return to;
