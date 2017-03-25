@@ -28,12 +28,10 @@ you may need to `apt-get install grub-pc-bin`.
 
 ## to do
 
-- memcpy, memcmp, memmove, memset
-- unit tests
 - abort
 - panic
 - stack smashing protection
 - global constructor
 - userland
-- libc
+- unit tests
 

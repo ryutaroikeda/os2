@@ -18,10 +18,11 @@ void kernel_main(void) {
     char* s = &buf[1];
     //memcpy(buf, "holaa", 5);
     memmove(s, buf, 2);
-    memset(s, 'h', 5);
+    memset(s, 'h', 500);
     printf("%s", buf);
     if (0 == memcmp(buf, buf, 2)) {
         printf("eq\n");
     }
+    putchar('a');
 }
 

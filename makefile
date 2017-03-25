@@ -8,7 +8,7 @@ LIBS?=
 
 CFLAGS:=$(CFLAGS) -Wextra -Wall -pedantic -Werror -Wshadow -Wpointer-arith \
 	-Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -Wconversion \
-	-ffreestanding -std=gnu99 -Ikernel/include
+	-ffreestanding -std=gnu99 -fstack-protector-all -Ikernel/include
 
 LIBK_CFLAGS:=$(CFLAGS) -D__is_libk
 
@@ -70,6 +70,14 @@ os.iso: grub.cfg os.kernel
 
 libk.a: $(LIBK_OBJ)
 	$(AR) -rsc $@ $(LIBK_OBJ)
+
+# will be used for userspace
+libssp.a:
+	$(AR) -rsc $@
+
+# will be used for userspace
+libssp_nonshared.a:
+	$(AR) -rsc $@
 
 %.o: %.s
 	$(AS) $< -o $@
