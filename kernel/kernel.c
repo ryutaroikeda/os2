@@ -18,6 +18,7 @@ void kernel_main(void) {
     char* s = &buf[1];
     //memcpy(buf, "holaa", 5);
     memmove(s, buf, 2);
+    memset(s, 'h', 5);
     printf("%s", buf);
 }
 
