@@ -20,5 +20,8 @@ void kernel_main(void) {
     memmove(s, buf, 2);
     memset(s, 'h', 5);
     printf("%s", buf);
+    if (0 == memcmp(buf, buf, 2)) {
+        printf("eq\n");
+    }
 }
 
