@@ -1,8 +1,39 @@
 #include <kernel/terminal.h>
 #include <limits.h>
 #include <stdarg.h>
+#include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+
+static int print_int(int i, size_t size) {
+    char buf[32];
+    if (32 < size) {
+        size = 32;
+    }
+    size_t written = 0;
+    bool negative = i < 0;
+    if (0 == i) {
+        buf[written++] = '0';
+    } else if (negative) {
+        i *= -1;
+        terminal_putchar('-');
+    }
+    while (written < size && 0 < i) {
+        buf[written++] = (char) ((i % 10) + '0');
+        i /= 10;
+    }
+    if (0 < i) {
+        return EOF;
+    }
+    for (size_t j = written; j > 0; j--) {
+        terminal_putchar(buf[j - 1]);
+    }
+    if (negative) {
+        written++;
+    }
+    return (int) written;
+}
 
 int printf(const char* format, ...) {
     va_list args;
@@ -36,6 +67,12 @@ int printf(const char* format, ...) {
             }
             terminal_writestring(s);
             written += (int) len;
+        } else if ('d' == format[i]) {
+            int len = print_int(va_arg(args, int), remaining);
+            if (len < 0) {
+                return EOF;
+            }
+            written += len;
         } else {
             // this should not happen
             return EOF;

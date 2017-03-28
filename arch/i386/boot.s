@@ -29,12 +29,22 @@ stack_top:
 .type _start, @function
 _start:
 	# We are in 32 bit protected mode on an x86 machine.
-	# Interrupts and paging are disabled.
+	# Interrupts are disabled.
 
 	# Set up the stack.
 	mov $stack_top, %esp
 
-	# to do: set up global descriptor table, paging
+	# Set up paging
+	# cr3 is the page directory base register
+	# todo set up page directory and page tables
+	#mov %eax, $page_directory
+	#mov %cr3, %eax
+
+	#mov %eax, %cr0
+	# bit 0: set protection enable. grub does it already
+	# bit 31: set paging
+	#or %eax, 0x80000001
+	#mov %cr0, %eax
 
 	call kernel_main
 
