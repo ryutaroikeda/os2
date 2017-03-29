@@ -21,7 +21,7 @@ ARCH_S:=$(wildcard $(ARCHDIR)/*.s)
 LIBK_C:=$(wildcard libc/stdio/*.c libc/string/*.c libc/stdlib/*.c)
 
 KERNEL_OBJ:=$(KERNEL_C:.c=.o)
-ARCH_OBJ:=$(ARCH_C:.c=.o) $(ARCH_S:.s=.o)
+ARCH_OBJ:=$(ARCH_C:.c=.o) $(ARCH_S:.s=.s.o)
 LIBK_OBJ:=$(LIBK_C:.c=.libk.o)
 
 LIB_BINARIES:=libk.a
@@ -79,7 +79,7 @@ libssp.a:
 libssp_nonshared.a:
 	$(AR) -rsc $@
 
-%.o: %.s
+%.s.o: %.s
 	$(AS) $< -o $@
 
 %.libk.o: %.c

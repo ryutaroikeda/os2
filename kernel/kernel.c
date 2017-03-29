@@ -1,4 +1,6 @@
+#include <kernel/page.h>
 #include <kernel/terminal.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,6 +28,11 @@ void kernel_main(void) {
         printf("eq\n");
     }
     */
-    printf("%d", 43);
+    page_initialize();
+    uint32_t* a;
+    a = (uint32_t*)0x101fff111;
+    *a = 2345;
+    printf("%d\n", *a);
+    printf("exit kernel\n");
 }
 
