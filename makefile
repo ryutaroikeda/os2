@@ -35,6 +35,7 @@ all: install-headers os.iso
 
 clean:
 	-rm $(KERNEL_OBJ) $(ARCH_OBJ) $(LIBK_OBJ)
+	-rm $(KERNEL_OBJ:.o=.d) $(ARCH_OBJ:.o=.d) $(LIBK_OBJ:.o=.d)
 	-rm os.kernel
 	-rm os.iso
 	-rm libk.a

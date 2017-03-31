@@ -1,5 +1,4 @@
-#include <kernel/page.h>
-#include <kernel/terminal.h>
+#include <kernel/arch.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +14,7 @@
 
 void kernel_main(void);
 void kernel_main(void) {
-    terminal_initialize();
+    arch_initalize();
     char buf[] = "hello world\n";
     char* s = &buf[1];
     //memcpy(buf, "holaa", 5);
@@ -28,7 +27,6 @@ void kernel_main(void) {
         printf("eq\n");
     }
     */
-    page_initialize();
     uint32_t* a;
     a = (uint32_t*)0x101fff111;
     *a = 2345;
