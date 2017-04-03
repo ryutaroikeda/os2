@@ -1,16 +1,18 @@
+#include "interrupt.h"
 #include <kernel/arch.h>
 #include <kernel/terminal.h>
+#include "gdt.h"
+#include "page.h"
 
-extern void gdt_initialize(void);
+#include <stdio.h>
+#include <stdlib.h>
 
-extern void page_initialize(void);
-
-extern void idt_initialize(void);
-
-void arch_initalize(void) {
+void arch_initialize(void) {
     terminal_initialize();
-    page_initialize();
     gdt_initialize();
-    idt_initialize();
+    return;
+    page_initialize();
+    interrupt_initialize();
+    //printf("exit arch_initialize\n");
 }
 

@@ -74,6 +74,7 @@ you may need to `apt-get install grub-pc-bin`.
 
 ## to do
 
+- gdt
 - global constructors
 - paging
 
@@ -86,4 +87,11 @@ call; this gets stored in a separate table (interrupt handler table). Update
 actual idt with pointer to appropriate assembly based on error code flag.
 - common interrupt handler prepares interrupt stack, then use irq to get
   function from interrupt handler table. Call it, then iret.
+
+Using `__attribute__((packed))` can be dangerous on hardware that doesn't
+support access to unaligned, but it's okay on x86 systems.
+
+
+## bugs
+- ljmp in segment register reload is going to a strange place
 

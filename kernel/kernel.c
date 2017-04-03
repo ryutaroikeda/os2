@@ -14,7 +14,7 @@
 
 void kernel_main(void);
 void kernel_main(void) {
-    arch_initalize();
+    arch_initialize();
     char buf[] = "hello world\n";
     char* s = &buf[1];
     //memcpy(buf, "holaa", 5);
@@ -27,10 +27,6 @@ void kernel_main(void) {
         printf("eq\n");
     }
     */
-    uint32_t* a;
-    a = (uint32_t*)0x101fff111;
-    *a = 2345;
-    printf("%d\n", *a);
     printf("exit kernel\n");
 }
 

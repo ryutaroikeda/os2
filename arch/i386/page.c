@@ -1,3 +1,4 @@
+#include "page.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -12,7 +13,6 @@ extern void page_load_directory(uint32_t*);
 
 extern void page_enable(void);
 
-void page_initialize(void);
 void page_initialize(void) {
     for (size_t i = 0; i < 1024; i++) {
         // enable read and write

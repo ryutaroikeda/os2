@@ -34,12 +34,6 @@ _start:
 	# Set up the stack.
 	mov $stack_top, %esp
 
-	#mov %eax, %cr0
-	# bit 0: set protection enable. grub does it already
-	# bit 31: set paging
-	#or %eax, 0x80000001
-	#mov %cr0, %eax
-
 	call kernel_main
 
 	# Loop forever.
