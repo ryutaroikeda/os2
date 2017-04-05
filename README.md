@@ -92,6 +92,3 @@ Using `__attribute__((packed))` can be dangerous on hardware that doesn't
 support access to unaligned, but it's okay on x86 systems.
 
 
-## bugs
-- ljmp in segment register reload is going to a strange place
-
