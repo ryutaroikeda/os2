@@ -48,10 +48,12 @@ tags:
 
 install-headers:
 	mkdir -p $(SYSROOT)$(PREFIX)/include
+	cp -r --preserve=timestamps include/* $(SYSROOT)$(PREFIX)/include/
 	for module in $(MODULES) ; do \
 		cp -r --preserve=timestamps $$module/include/* \
 			$(SYSROOT)$(PREFIX)/include/ ; \
 	done
+
 
 os.kernel: $(ARCHDIR)/linker.ld $(KERNEL_OBJ) $(ARCH_OBJ) $(LIB_BINARIES)
 	mkdir -p $(SYSROOT)$(PREFIX)/lib

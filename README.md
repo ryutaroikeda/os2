@@ -74,7 +74,6 @@ you may need to `apt-get install grub-pc-bin`.
 
 ## to do
 
-- gdt
 - global constructors
 - paging
 

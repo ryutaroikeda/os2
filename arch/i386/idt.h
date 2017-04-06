@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 enum {
-    idt_limit = 255
+    idt_gate_size = 256
 };
 
 struct idt_pointer {
@@ -22,8 +22,6 @@ struct idt_gate {
     uint8_t present: 1;
     uint16_t offset_hi;
 } __attribute__((packed));
-
-struct idt_gate idt[idt_limit];
 
 void idt_load(const struct idt_pointer*);
 
