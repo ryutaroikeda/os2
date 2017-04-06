@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define GDT_CODE_SEGMENT 0x8
+#define GDT_DATA_SEGMENT 0x10
+
 struct gdt_pointer {
     uint16_t limit;
     uint32_t base;

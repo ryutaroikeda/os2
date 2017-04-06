@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 enum {
-    idt_gate_size = 256
+    IDT_GATE_SIZE = 256
 };
 
 struct idt_pointer {
