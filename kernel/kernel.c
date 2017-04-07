@@ -27,6 +27,7 @@ void kernel_main(void) {
         printf("eq\n");
     }
     */
+    printf("testing %d %s\n", 234523, "hello world");
     printf("exit kernel\n");
 }
 

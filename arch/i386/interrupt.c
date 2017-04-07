@@ -2,10 +2,7 @@
 #include "idt.h"
 #include "interrupt.h"
 #include <macro/repeat.h>
-
-enum {
-    INTERRUPT_GATE_TYPE_INTERRUPT_32 = 0xe
-};
+#include <stdlib.h>
 
 struct idt_pointer idt_pointer;
 
@@ -31,10 +28,17 @@ void interrupt_initialize(void) {
     for (size_t irq = 0; irq < IDT_GATE_SIZE; irq++) {
         interrupt_register_handler(irq, false, NULL, false);
     }
+    idt_pointer = (struct idt_pointer) {
+        .limit = sizeof(idt_gates) - 1,
+        .base = (uint32_t) &idt_pointer
+    };
+    idt_load(&idt_pointer);
+    interrupt_enable();
 }
 
 void interrupt_register_handler(size_t irq, interrupt_handler handler,
         bool error_code, bool present) {
+    interrupt_disable();
     if (error_code) {
         idt_gates[irq] = (struct idt_gate) {
             .offset_lo =
@@ -43,9 +47,9 @@ void interrupt_register_handler(size_t irq, interrupt_handler handler,
                 ((size_t) interrupt_entry_with_error_code[irq] >> 16),
             .selector = GDT_CODE_SEGMENT,
             .zero = 0,
-            .gate_type = INTERRUPT_GATE_TYPE_INTERRUPT_32,
+            .gate_type = IDT_GATE_TYPE_INTERRUPT_32,
             .storage_segment = 0,
-            .descriptor_privilege_level = 0,
+            .privilege = 0,
             .present = present
         };
     } else {
@@ -56,15 +60,23 @@ void interrupt_register_handler(size_t irq, interrupt_handler handler,
                 ((size_t) interrupt_entry_without_error_code[irq] >> 16),
             .selector = GDT_CODE_SEGMENT,
             .zero = 0,
-            .gate_type = INTERRUPT_GATE_TYPE_INTERRUPT_32,
+            .gate_type = IDT_GATE_TYPE_INTERRUPT_32,
             .storage_segment = 0,
-            .descriptor_privilege_level = 0,
+            .privilege = 0,
             .present = present
         };
     }
     interrupt_handlers[irq] = handler;
+    interrupt_enable();
 }
 
 void interrupt_handle(const struct interrupt_stack* stack, size_t irq) {
     interrupt_handlers[irq](stack);
 }
+
+/*
+static void interrupt_handle_divide_fault(const struct interrupt_stack* s) {
+    (void) s;
+    abort();
+}
+*/

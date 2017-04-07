@@ -21,5 +21,8 @@ void interrupt_register_handler(size_t irq, interrupt_handler,
 
 void interrupt_handle(const struct interrupt_stack*, size_t irq);
 
+void interrupt_enable(void);
+void interrupt_disable(void);
+
 #endif
 
