@@ -24,5 +24,7 @@ void interrupt_handle(const struct interrupt_stack*, size_t irq);
 void interrupt_enable(void);
 void interrupt_disable(void);
 
+bool interrupt_handler_present(size_t irq);
+
 #endif
 

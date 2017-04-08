@@ -1,3 +1,4 @@
+#include <kernel.h>
 #include <kernel/arch.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -28,6 +29,7 @@ void kernel_main(void) {
     }
     */
     printf("testing %d %s\n", 234523, "hello world");
+    panic("woops");
     printf("exit kernel\n");
 }
 

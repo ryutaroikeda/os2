@@ -1,6 +1,7 @@
 #include "gdt.h"
 #include "idt.h"
 #include "interrupt.h"
+#include <kernel.h>
 #include <macro/repeat.h>
 #include <stdlib.h>
 
@@ -33,12 +34,11 @@ void interrupt_initialize(void) {
         .base = (uint32_t) &idt_pointer
     };
     idt_load(&idt_pointer);
-    interrupt_enable();
+    //interrupt_enable();
 }
 
 void interrupt_register_handler(size_t irq, interrupt_handler handler,
         bool error_code, bool present) {
-    interrupt_disable();
     if (error_code) {
         idt_gates[irq] = (struct idt_gate) {
             .offset_lo =
@@ -67,11 +67,17 @@ void interrupt_register_handler(size_t irq, interrupt_handler handler,
         };
     }
     interrupt_handlers[irq] = handler;
-    interrupt_enable();
 }
 
 void interrupt_handle(const struct interrupt_stack* stack, size_t irq) {
+    if (! interrupt_handler_present(irq)) {
+        panic("no handler for irq %d", irq);
+    }
     interrupt_handlers[irq](stack);
+}
+
+bool interrupt_handler_present(size_t irq) {
+    return idt_gates[irq].present;
 }
 
 /*

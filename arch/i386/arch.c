@@ -10,8 +10,8 @@
 void arch_initialize(void) {
     terminal_initialize();
     gdt_initialize();
-    interrupt_initialize();
     return;
+    interrupt_initialize();
     page_initialize();
 }
 
