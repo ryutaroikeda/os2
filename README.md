@@ -91,3 +91,16 @@ Using `__attribute__((packed))` can be dangerous on hardware that doesn't
 support access to unaligned, but it's okay on x86 systems.
 
 
+## structure
+
+- arch
+	- i386
+		- don't expose headers
+
+- kernel
+	- include
+		- .h implemented by arch or in kernel, exposed to libk
+	- arch independent .c
+
+- libc and libk
+
