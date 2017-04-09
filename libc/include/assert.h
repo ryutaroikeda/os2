@@ -7,8 +7,8 @@
 #include <stdlib.h>
 
 #define assert(condition) if (! (condition)) { \
-    printf("%s:%d:%s: assert failed: %s\n", __FILE__, __LINE__, __func__, \
-#condition); abort(); }
+    printf("%s:%d: %s: Assertion `%s' failed\n", __FILE__, __LINE__, \
+            __func__, #condition); abort(); }
 
 #else
 

@@ -43,6 +43,6 @@ _start:
 	jmp 1b
 
 # Set the size of the _start function to the current location minus the
-# location of start. Apparently this makes it easier to debug.
+# location of start. Apparently this makes debugging easier.
 .size _start, . - _start
 
