@@ -12,6 +12,11 @@ struct interrupt_stack {
     uint32_t eflags;
 } __attribute__((packed));
 
+struct interrupt_handler {
+    void (*callback)(const struct interrupt_stack*);
+    bool present;
+};
+
 typedef void (*interrupt_handler)(const struct interrupt_stack*);
 
 void interrupt_handle(const struct interrupt_stack*, size_t irq);

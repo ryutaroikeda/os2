@@ -15,7 +15,7 @@ struct idt_pointer idt_pointer = {
         .base = (uint32_t) idt_gates
 };
 
-interrupt_handler interrupt_handlers[IDT_GATE_SIZE];
+struct interrupt_handler interrupt_handlers[IDT_GATE_SIZE];
 
 void* interrupt_entry_with_error_code[IDT_GATE_SIZE];
 void* interrupt_entry_without_error_code[IDT_GATE_SIZE];
@@ -30,24 +30,24 @@ static void interrupt_handle_default(const struct interrupt_stack* s) {
     panic("unregistered interrupt handler called");
 }
 
+/*
 static void interrupt_handle_divide_fault(const struct interrupt_stack* s) {
     (void) s;
     panic("division by zero");
 }
 
-/*
 static void interrupt_handle_segment_not_set_fault(
         const struct interrupt_stack* s) {
     (void) s;
     panic("segment not present");
 }
-*/
 
 static void interrupt_handle_general_protection_fault(
         const struct interrupt_stack* s) {
     (void) s;
     panic("general protection fault");
 }
+*/
 
 void interrupt_initialize(void) {
     assert(6 == sizeof(struct idt_pointer));
@@ -63,17 +63,17 @@ void interrupt_initialize(void) {
     }
     idt_load(&idt_pointer);
 
-    interrupt_set_handler(0, interrupt_handle_divide_fault, false, true);
+//    interrupt_set_handler(0, interrupt_handle_divide_fault, false, true);
     /*
     interrupt_set_handler(11, interrupt_handle_segment_not_set_fault, true,
             true);
             */
-    interrupt_set_handler(13, interrupt_handle_general_protection_fault,
-            true, true);
+ //   interrupt_set_handler(13, interrupt_handle_general_protection_fault,
+   //         true, true);
     interrupt_enable();
 }
 
-static struct idt_gate idt_gate(uint32_t offset, bool present) {
+static struct idt_gate idt_gate(uint32_t offset) {
     return (struct idt_gate) {
         .offset_lo = offset & 0xffff,
         .offset_hi = (uint16_t) (offset >> 16),
@@ -82,7 +82,7 @@ static struct idt_gate idt_gate(uint32_t offset, bool present) {
         .gate_type = IDT_GATE_TYPE_INTERRUPT_32,
         .storage_segment = 0,
         .privilege = 0,
-        .present = present
+        .present = true
     };
 }
 
@@ -90,22 +90,25 @@ void interrupt_set_handler(uint32_t irq, interrupt_handler handler,
         bool error_code, bool present) {
     if (error_code) {
         idt_gates[irq] = idt_gate(
-                (uint32_t) interrupt_entry_with_error_code[irq], present);
+                (uint32_t) interrupt_entry_with_error_code[irq]);
     } else {
         idt_gates[irq] = idt_gate(
-                (uint32_t) interrupt_entry_without_error_code[irq], present);
+                (uint32_t) interrupt_entry_without_error_code[irq]);
     }
-    interrupt_handlers[irq] = handler;
+    interrupt_handlers[irq] = (struct interrupt_handler) {
+        .callback = handler,
+        .present = present
+    };
 }
 
 void interrupt_handle(const struct interrupt_stack* stack, uint32_t irq) {
     if (! interrupt_handler_present(irq)) {
         panic("no handler for irq %d", irq);
     }
-    interrupt_handlers[irq](stack);
+    interrupt_handlers[irq].callback(stack);
 }
 
 bool interrupt_handler_present(uint32_t irq) {
-    return idt_gates[irq].present;
+    return interrupt_handlers[irq].present;
 }
 
