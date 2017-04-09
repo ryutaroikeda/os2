@@ -1,5 +1,7 @@
+#include <assert.h>
 #include <kernel.h>
 #include <kernel/arch.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,20 +18,12 @@
 void kernel_main(void);
 void kernel_main(void) {
     arch_initialize();
-    char buf[] = "hello world\n";
-    char* s = &buf[1];
-    //memcpy(buf, "holaa", 5);
-
-    memmove(s, buf, 2);
-    //memset(s, 'h', 500);
-    /*
-    printf("%s", buf);
-    if (0 == memcmp(buf, buf, 2)) {
-        printf("eq\n");
-    }
-    */
+    assert(false);
     printf("testing %d %s\n", 234523, "hello world");
-    panic("woops");
+    int x = 0;
+    int a = 1 / x;
+    printf("%d", a);
+    //idle();
     printf("exit kernel\n");
 }
 

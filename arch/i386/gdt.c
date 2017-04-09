@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "gdt.h"
 
 struct gdt_descriptor gdt[3];
@@ -8,6 +9,7 @@ struct gdt_pointer gdt_pointer = {
 };
 
 void gdt_initialize(void) {
+    assert(sizeof(struct gdt_descriptor) == 8);
     gdt[0] = (struct gdt_descriptor) {0};
     gdt[1] = gdt_descriptor(0, 0xfffff, 0x9a, 0xc);
     gdt[2] = gdt_descriptor(0, 0xfffff, 0x92, 0xc);

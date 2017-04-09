@@ -15,4 +15,5 @@ for i in range(0, 256):
     print('{}:'.format(handler))
     print('pushl $0')
     print('pushl ${}'.format(i))
+    print('jmp interrupt_common_handler')
 

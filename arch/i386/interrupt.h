@@ -14,15 +14,10 @@ struct interrupt_stack {
 
 typedef void (*interrupt_handler)(const struct interrupt_stack*);
 
-void interrupt_initialize(void);
-
-void interrupt_register_handler(size_t irq, interrupt_handler,
-        bool error_code, bool present);
-
 void interrupt_handle(const struct interrupt_stack*, size_t irq);
 
-void interrupt_enable(void);
-void interrupt_disable(void);
+void interrupt_set_handler(size_t irq, interrupt_handler,
+        bool error_code, bool present);
 
 bool interrupt_handler_present(size_t irq);
 

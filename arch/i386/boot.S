@@ -36,8 +36,9 @@ _start:
 
 	call kernel_main
 
-	# Loop forever.
+    # Disable interrupts.
 	cli
+	# Loop forever.
 1:  hlt
 	jmp 1b
 

@@ -12,7 +12,6 @@ gdt_load:
     mov %eax, %gs
     mov %eax, %ss
     /* Assume second GDT entry is code segment. Set %cs with a far return. */
-
     jmp $0x8, $gdt_reset_segment_registers_end
 gdt_reset_segment_registers_end:
     ret
