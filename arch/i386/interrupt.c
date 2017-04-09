@@ -15,8 +15,11 @@ struct idt_pointer idt_pointer = {
         .base = (uint32_t) idt_gates
 };
 
+/* Register handlers written in C with interrupt_set_handler. */
 struct interrupt_handler interrupt_handlers[IDT_GATE_SIZE];
 
+/* Pointers to assembly code that set up the call to
+ * interrupt_handle. See interrupt_entry.S */
 void* interrupt_entry_with_error_code[IDT_GATE_SIZE];
 void* interrupt_entry_without_error_code[IDT_GATE_SIZE];
 
@@ -30,12 +33,12 @@ static void interrupt_handle_default(const struct interrupt_stack* s) {
     panic("unregistered interrupt handler called");
 }
 
-/*
 static void interrupt_handle_divide_fault(const struct interrupt_stack* s) {
     (void) s;
     panic("division by zero");
 }
 
+/*
 static void interrupt_handle_segment_not_set_fault(
         const struct interrupt_stack* s) {
     (void) s;
@@ -63,7 +66,7 @@ void interrupt_initialize(void) {
     }
     idt_load(&idt_pointer);
 
-//    interrupt_set_handler(0, interrupt_handle_divide_fault, false, true);
+    interrupt_set_handler(0, interrupt_handle_divide_fault, false, true);
     /*
     interrupt_set_handler(11, interrupt_handle_segment_not_set_fault, true,
             true);

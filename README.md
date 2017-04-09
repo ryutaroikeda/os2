@@ -1,7 +1,5 @@
 # os2
 
-Based on wiki.osdev.org
-
 ## Building the cross-compiler
 
 Install the following on a Unix-like environment
@@ -74,21 +72,9 @@ you may need to `apt-get install grub-pc-bin`.
 
 ## to do
 
-- global constructors
 - paging
-
-interrupts
-- macro to generate 255 * 2 handlers for error code and none error code. 
-just a piece of assembly to push irq and dummy error code if needed, then call
-common interrupt handler.
-- register interrupt handler by giving irq, error code flag, and c function to
-call; this gets stored in a separate table (interrupt handler table). Update
-actual idt with pointer to appropriate assembly based on error code flag.
-- common interrupt handler prepares interrupt stack, then use irq to get
-  function from interrupt handler table. Call it, then iret.
-
-Using `__attribute__((packed))` can be dangerous on hardware that doesn't
-support access to unaligned, but it's okay on x86 systems.
+- higher half kernel
+- global constructors
 
 
 ## structure

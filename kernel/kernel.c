@@ -19,9 +19,11 @@ void kernel_main(void);
 void kernel_main(void) {
     arch_initialize();
     printf("testing %d %s\n", 234523, "hello world");
+    /*
     int x = 0;
     int a = 1 / x;
     printf("%d", a);
+    */
     printf("exit kernel\n");
 }
 
