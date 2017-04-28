@@ -5,7 +5,7 @@
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
-static uint16_t* const VGA_MEMORY = (uint16_t*) 0xb8000;
+static uint16_t* const VGA_MEMORY = (uint16_t*) 0xc00b8000;
 
 struct terminal {
     size_t row;

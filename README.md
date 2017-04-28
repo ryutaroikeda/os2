@@ -72,8 +72,7 @@ you may need to `apt-get install grub-pc-bin`.
 
 ## to do
 
-- paging
-- higher half kernel
+- higher half kernel and paging
 - global constructors
 
 

@@ -9,9 +9,10 @@
 
 void arch_initialize(void) {
     terminal_initialize();
+    /*
     gdt_initialize();
     interrupt_initialize();
-    return;
-    page_initialize();
+    */
+    //page_initialize();
 }
 
