@@ -6,29 +6,39 @@
 #include <stdio.h>
 #include <string.h>
 
-static int print_int(int i, size_t size) {
+static int print_unsigned_int(unsigned int u, size_t size) {
     char buf[32];
     if (32 < size) {
         size = 32;
     }
     size_t written = 0;
-    bool negative = i < 0;
-    if (0 == i) {
+    if (0 == u) {
         buf[written++] = '0';
-    } else if (negative) {
-        i *= -1;
-        terminal_putchar('-');
     }
-    while (written < size && 0 < i) {
-        buf[written++] = (char) ((i % 10) + '0');
-        i /= 10;
+    while (written < size && 0 < u) {
+        buf[written++] = (char) ((u % 10) + '0');
+        u /= 10;
     }
-    if (0 < i) {
+    if (0 < u) {
         return EOF;
     }
     for (size_t j = written; j > 0; j--) {
         terminal_putchar(buf[j - 1]);
     }
+    return (int) written;
+}
+
+static int print_int(int i, size_t size) {
+    size_t written = 0;
+    bool negative = i < 0;
+    unsigned int u;
+    if (negative) {
+        u = (unsigned int) (-1 * i);
+        terminal_putchar('-');
+    } else {
+        u = (unsigned int) i;
+    }
+    print_unsigned_int(u, size);
     if (negative) {
         written++;
     }
@@ -67,6 +77,13 @@ int vprintf(const char* format, va_list args) {
             written += (int) len;
         } else if ('d' == format[i]) {
             int len = print_int(va_arg(args, int), remaining);
+            if (len < 0) {
+                return EOF;
+            }
+            written += len;
+        } else if ('u' == format[i]) {
+            int len = print_unsigned_int(va_arg(args, unsigned int),
+                    remaining);
             if (len < 0) {
                 return EOF;
             }

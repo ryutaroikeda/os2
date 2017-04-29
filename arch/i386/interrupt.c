@@ -34,23 +34,23 @@ static void interrupt_handle_default(const struct interrupt_stack* s) {
 }
 
 static void interrupt_handle_divide_fault(const struct interrupt_stack* s) {
-    (void) s;
-    panic("division by zero");
+    panic("division by zero: %u", s->error_code);
 }
 
-/*
+static void interrupt_handle_stack_exception(const struct interrupt_stack* s)
+{
+    panic("stack exception: %u", s->error_code);
+}
+
 static void interrupt_handle_segment_not_set_fault(
         const struct interrupt_stack* s) {
-    (void) s;
-    panic("segment not present");
+    panic("segment not present: %u", s->error_code);
 }
 
 static void interrupt_handle_general_protection_fault(
         const struct interrupt_stack* s) {
-    (void) s;
-    panic("general protection fault");
+    panic("general protection fault: %u", s->error_code);
 }
-*/
 
 void interrupt_initialize(void) {
     assert(6 == sizeof(struct idt_pointer));
@@ -67,12 +67,14 @@ void interrupt_initialize(void) {
     idt_load(&idt_pointer);
 
     interrupt_set_handler(0, interrupt_handle_divide_fault, false, true);
-    /*
+    interrupt_set_handler(8, interrupt_handle_default, true, false);
+    interrupt_set_handler(10, interrupt_handle_default, true, false);
     interrupt_set_handler(11, interrupt_handle_segment_not_set_fault, true,
             true);
-            */
- //   interrupt_set_handler(13, interrupt_handle_general_protection_fault,
-   //         true, true);
+    interrupt_set_handler(12, interrupt_handle_stack_exception, true, true);
+    interrupt_set_handler(13, interrupt_handle_general_protection_fault,
+            true, true);
+    interrupt_set_handler(14, interrupt_handle_default, true, false);
     interrupt_enable();
 }
 

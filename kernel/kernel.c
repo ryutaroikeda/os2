@@ -21,13 +21,17 @@ void kernel_main(void* mbi, uint32_t magic) {
     (void) magic;
     arch_initialize();
     printf("testing %d %s\n", 234523, "hello world");
-
     /*
     int x = 0;
     int a = 1 / x;
     printf("%d", a);
     printf("%d", x);
     */
+    double j = 1.00;
+    for (int i = 0; i < 1000000000; i++) {
+        j *= j;
+    }
+    printf("%d\n", (int)j);
     printf("exit kernel\n");
 }
 

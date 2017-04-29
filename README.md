@@ -70,6 +70,21 @@ To run with QEMU, do
 If the boot fails with something like `Could not read from CD-ROM (code 0009)`
 you may need to `apt-get install grub-pc-bin`.
 
+
+## Debugging with gdb
+
+Start qemu with `./debug.sh`.
+
+From another terminal, start gdb client
+`gdb`
+
+Then in gdb,
+```
+(gdb) target remote localhost:1234
+(gdb) symbol-file os.kernel
+```
+
+
 ## to do
 
 - higher half kernel and paging
