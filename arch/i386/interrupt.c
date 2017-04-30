@@ -11,8 +11,8 @@
 struct idt_gate idt_gates[IDT_GATE_SIZE];
 
 struct idt_pointer idt_pointer = {
-        .limit = sizeof(idt_gates) - 1,
-        .base = (uint32_t) idt_gates
+    .limit = sizeof(idt_gates) - 1,
+    .base = (uint32_t) idt_gates
 };
 
 /* Register handlers written in C with interrupt_set_handler. */
@@ -33,6 +33,7 @@ static void interrupt_handle_default(const struct interrupt_stack* s) {
     panic("unregistered interrupt handler called");
 }
 
+/*
 static void interrupt_handle_divide_fault(const struct interrupt_stack* s) {
     panic("division by zero: %u", s->error_code);
 }
@@ -51,6 +52,7 @@ static void interrupt_handle_general_protection_fault(
         const struct interrupt_stack* s) {
     panic("general protection fault: %u", s->error_code);
 }
+*/
 
 void interrupt_initialize(void) {
     assert(6 == sizeof(struct idt_pointer));
@@ -66,15 +68,17 @@ void interrupt_initialize(void) {
     }
     idt_load(&idt_pointer);
 
+    /*
     interrupt_set_handler(0, interrupt_handle_divide_fault, false, true);
-    interrupt_set_handler(8, interrupt_handle_default, true, false);
-    interrupt_set_handler(10, interrupt_handle_default, true, false);
+    //interrupt_set_handler(8, interrupt_handle_default, true, false);
+    //interrupt_set_handler(10, interrupt_handle_default, true, false);
     interrupt_set_handler(11, interrupt_handle_segment_not_set_fault, true,
             true);
     interrupt_set_handler(12, interrupt_handle_stack_exception, true, true);
     interrupt_set_handler(13, interrupt_handle_general_protection_fault,
             true, true);
-    interrupt_set_handler(14, interrupt_handle_default, true, false);
+    //interrupt_set_handler(14, interrupt_handle_default, true, false);
+    */
     interrupt_enable();
 }
 

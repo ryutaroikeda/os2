@@ -27,11 +27,9 @@ void kernel_main(void* mbi, uint32_t magic) {
     printf("%d", a);
     printf("%d", x);
     */
-    double j = 1.00;
-    for (int i = 0; i < 1000000000; i++) {
-        j *= j;
+    while (true) {
+        idle();
     }
-    printf("%d\n", (int)j);
     printf("exit kernel\n");
 }
 
