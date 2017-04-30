@@ -9,6 +9,7 @@
 
 # Base address of the virtual kernel space. This must be subtracted from
 # addresses until paging is enabled.
+.global KERNEL_VIRTUAL_BASE
 .set KERNEL_VIRTUAL_BASE, 0xc0000000
 # Page directory index for kernel page.
 .set KERNEL_PAGE_NUMBER, KERNEL_VIRTUAL_BASE >> 22

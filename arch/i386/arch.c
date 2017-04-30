@@ -14,7 +14,6 @@ void arch_initialize(void) {
     gdt_initialize();
     pic_initialize();
     interrupt_initialize();
-    return;
     keyboard_initialize();
 }
 

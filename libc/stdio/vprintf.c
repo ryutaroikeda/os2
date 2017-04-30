@@ -45,6 +45,32 @@ static int print_int(int i, size_t size) {
     return (int) written;
 }
 
+static int print_hex(unsigned int h, size_t size) {
+    char buf[32];
+    if (32 < size) {
+        size = 32;
+    }
+    size_t written = 0;
+    if (0 == h) {
+        buf[written++] = '0';
+    }
+    while (written < size && 0 < h) {
+        char b = h & 0xf;
+        char c;
+        if (b <= 9) {
+            c = (char) (b + '0');
+        } else {
+            c = (char) (b - 10 + 'a');
+        }
+        h = h >> 4;
+        buf[written++] = c;
+    }
+    for (size_t j = written; j > 0; j--) {
+        terminal_putchar(buf[j - 1]);
+    }
+    return (int) written;
+}
+
 int vprintf(const char* format, va_list args) {
     int written = 0;
     size_t i = 0;
@@ -84,6 +110,12 @@ int vprintf(const char* format, va_list args) {
         } else if ('u' == format[i]) {
             int len = print_unsigned_int(va_arg(args, unsigned int),
                     remaining);
+            if (len < 0) {
+                return EOF;
+            }
+            written += len;
+        } else if ('x' == format[i]) {
+            int len = print_hex(va_arg(args, unsigned int), remaining);
             if (len < 0) {
                 return EOF;
             }
