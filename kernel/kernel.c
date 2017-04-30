@@ -20,7 +20,7 @@ void kernel_main(multiboot_info_t* mbi, uint32_t magic);
 void kernel_main(multiboot_info_t* mbi, uint32_t magic) {
     (void) magic;
     arch_initialize(mbi);
-    printf("testing %d %s\n", 234523, "hello world");
+    printf("%s\n", "hello world");
     /*
     int x = 0;
     int a = 1 / x;

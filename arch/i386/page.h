@@ -37,7 +37,10 @@ void page_initialize(void);
 
 void page_map(uint32_t* src, uint32_t* dst, size_t size);
 
-void page_initialize(void);
+void page_enable(void);
+
+void page_enable_size_extension(void);
+
+void page_load_directory(uint32_t*);
 
 #endif
-

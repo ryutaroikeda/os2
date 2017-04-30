@@ -30,13 +30,12 @@ stack_top:
 
 .section .data
 .align 0x1000
-
-BOOT_PAGE_DIRECTORY:
-// Temporary page directory entry to identity-map the first 4 MiB of the 32 bit
-// physical address space. We have this here so that when we enable paging, we
-// don't crash.
-// Add more page tables as needed if kernel is too big to fit (more than
-// 3 MiB). The bits set are 4MiB, read-write and present.
+.global page_directory
+page_directory:
+// Temporary page directory entry to identity-map the first 4 MiB of the 32
+// bit physical address space. We have this here so that when we enable
+// paging, we don't crash. Add more page tables as needed if kernel is too big
+// to fit (more than 3 MiB). The bits set are 4MiB, read-write and present.
 .long 0x00000083
 // Pages before kernel space.
 .rept KERNEL_PAGE_NUMBER - 1
@@ -58,7 +57,7 @@ _start:
 	// Interrupts are disabled.
 
 	// Load page directory. Use the physical address.
-	mov $(BOOT_PAGE_DIRECTORY - KERNEL_VIRTUAL_BASE), %ecx
+	mov $(page_directory - KERNEL_VIRTUAL_BASE), %ecx
 	mov %ecx, %cr3
 
 	// Enable page size extension.
@@ -76,7 +75,7 @@ _start:
 
 start_in_higher_half:
 	// Unmap identity map.
-	movl $0, BOOT_PAGE_DIRECTORY
+	movl $0, page_directory
 	invlpg 0
 
 	// Set up the stack.
