@@ -41,6 +41,10 @@
 #endif
 
 #ifndef ASM
+/* Don't know why there is no include guard in original source. Define ASM
+ * here for guard. */
+#define ASM
+
 /* Do not include here in boot.S. */
 
 /* Types. */

@@ -83,7 +83,7 @@ libssp_nonshared.a:
 	$(AR) -rsc $@
 
 %.S.o: %.S
-	$(AS) $< -o $@
+	$(CC) -c $< -o $@
 
 %.libk.o: %.c
 	$(CC) -MD -c $< -o $@ $(LIBK_CFLAGS)

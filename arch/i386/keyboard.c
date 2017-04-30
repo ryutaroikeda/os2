@@ -23,6 +23,6 @@ static void keyboard_interrupt(const struct interrupt_stack* s) {
 
 void keyboard_initialize(void) {
     interrupt_set_handler(KEYBOARD_IRQ, keyboard_interrupt, false, true);
-    pic_unmask(KEYBOARD_IRQ);
+//    pic_unmask(KEYBOARD_IRQ);
 }
 
