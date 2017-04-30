@@ -3,8 +3,8 @@
 
 #include <kernel/multiboot.h>
 
-void memory_initialize(multiboot_info_t*);
+void memory_initialize(const multiboot_info_t*);
 
-void* memory_physical_to_virtual_address(void* p);
+void* memory_physical_to_virtual_address(const void* p);
 
 #endif

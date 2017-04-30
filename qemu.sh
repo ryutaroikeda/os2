@@ -3,5 +3,5 @@
 set -o errexit
 set -o nounset
 
-qemu-system-${ARCH} -cdrom os.iso
+qemu-system-${ARCH} -cdrom os.iso -m 1G
 
